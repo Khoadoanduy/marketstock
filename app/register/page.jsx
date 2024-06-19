@@ -1,12 +1,19 @@
-import RegisterForm from "@/components/RegisterForm";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import React from 'react'
+import RegistrationForm from '@/components/RegistrationForm'
 
-export default async function Register() {
-  const session = await getServerSession(authOptions);
+import Link from 'next/link'
 
-  if (session) redirect("/");
-
-  return <RegisterForm />;
+const RegisterPage = () => {
+  return (
+    <div className="flex flex-col justify-center items-center m-4">
+       <RegistrationForm /> 
+       <p className="my-3">
+        Already have an account?
+        <Link href="/" className="mx-2 underline">Login</Link>
+        </p>
+    </div>
+    
+  )
 }
+
+export default RegisterPage

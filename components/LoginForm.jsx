@@ -1,68 +1,60 @@
 "use client";
 
-import Link from "next/link";
+import SocialLogins from "./SocialLogins";
+
+import { doCredentialLogin } from "@/app/actions";
+
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
-  const router = useRouter();
+const LoginForm = () => {
+    const router = useRouter();
+    const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    async function onSubmit(event) {
+        event.preventDefault();
+        try {
+            const formData = new FormData(event.currentTarget);
 
-    try {
-      const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
+            const response = await doCredentialLogin(formData);
 
-      if (res.error) {
-        setError("Invalid Credentials");
-        return;
-      }
-
-      router.replace("");
-    } catch (error) {
-      console.log(error);
+            if (!!response.error) {
+                console.error(response.error);
+                setError(response.error.message);
+            } else {
+                router.push("/home");
+            }
+        } catch (e) {
+            console.error(e);
+            setError("Check your Credentials");
+        }
     }
-  };
 
-  return (
-    <div className="grid place-items-center h-screen">
-      <div className="shadow-lg p-5 rounded-lg border-t-4 border-green-400">
-        <h1 className="text-xl font-bold my-4">Login</h1>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            type="text"
-            placeholder="Email"
-          />
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Password"
-          />
-          <button className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2">
-            Login
-          </button>
-          {error && (
-            <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
-              {error}
-            </div>
-          )}
+    return (
+        <>
+            <div className="text-xl text-red-500">{error}</div>
+            <form 
+                className="my-5 flex flex-col items-center border p-3 border-gray-200 rounded-md"
+                onSubmit={onSubmit}>
+                <div className="my-2">
+                    <label htmlFor="email">Email Address</label>
+                    <input className="border mx-2 border-gray-500 rounded" type="email" name="email" id="email" />
+                </div>
 
-          <Link className="text-sm mt-3 text-right" href={"/register"}>
-            Don't have an account? <span className="underline text-white">Register</span>
-          </Link>
-        </form>
-      </div>
-    </div>
-  );
-}
+                <div className="my-2">
+                    <label htmlFor="password">Password</label>
+                    <input className="border mx-2 border-gray-500 rounded" type="password" name="password" id="password" />
+                </div>
+
+                <button type="submit" className="bg-orange-300 mt-4 rounded flex justify-center items-center w-36">
+                    Ceredential Login
+                </button>
+            </form>
+            <SocialLogins />
+        </>
+    );
+};
+
+export default LoginForm;
