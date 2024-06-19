@@ -27,7 +27,7 @@ export default function LoginForm() {
         return;
       }
 
-      router.replace("dashboard");
+      router.replace("");
     } catch (error) {
       console.log(error);
     }
@@ -59,7 +59,7 @@ export default function LoginForm() {
           )}
 
           <Link className="text-sm mt-3 text-right" href={"/register"}>
-            Don't have an account? <span className="underline">Register</span>
+            Don't have an account? <span className="underline text-white">Register</span>
           </Link>
         </form>
       </div>

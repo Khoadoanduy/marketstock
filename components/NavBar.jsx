@@ -1,15 +1,17 @@
 'use client'
-import React, { useRef } from 'react'
-import { HiOutlineMenuAlt4 } from 'react-icons/hi'
-import { AiOutlineClose } from 'react-icons/ai'
-import { FaFacebook, FaInstagram, FaPinterest, FaTwitter, FaYoutube } from 'react-icons/fa'
-import Link from 'next/link'
-import "@/styles/NavBar.css"
+import React, { useRef } from 'react';
+import { useRouter } from 'next/router';
+import { HiOutlineMenuAlt4 } from 'react-icons/hi';
+import { AiOutlineClose } from 'react-icons/ai';
+import { FaFacebook, FaInstagram, FaPinterest, FaTwitter, FaYoutube } from 'react-icons/fa';
+import "@/styles/NavBar.css";
+import Link from 'next/link';
 function NavBar() {
     const navRef = useRef(null);
     const logoRef = useRef(null);
     const mobileMenuRef = useRef(null);
     const iconRef = useRef(null);
+    // const router = useRouter();
 
     const handleNav = () => {
         const nav = navRef.current;
@@ -30,9 +32,9 @@ function NavBar() {
         }
     };
 
-    const showClick = () => {
-        console.log("Ran!");
-    };
+    // const showClick = () => {
+    //     router.push('/login');
+    // };
 
     return (
         <div>
@@ -44,11 +46,12 @@ function NavBar() {
                     <li><Link href='/' legacyBehavior><a>Home</a></Link></li>
                     <li><Link href='/about' legacyBehavior><a>About</a></Link></li>
                 </ul>
-                <div className="login-wrapper">
-                    <Link href='/signup' legacyBehavior>
-                        <a className="login" onClick={showClick}>Login</a>
-                    </Link>
-                </div>
+                {/* <div className="login-wrapper">
+                    <a className="login" onClick={showClick}>Login</a>
+                </div> */}
+                <Link className="text-sm mt-3 text-right" href={"/login"}>
+                    Log in
+                </Link>
                 <div className="hamburger" onClick={handleNav}>
                     <HiOutlineMenuAlt4 ref={iconRef} className='icon' />
                 </div>
