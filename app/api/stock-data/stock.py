@@ -3,7 +3,7 @@ import yfinance as yf
 
 app = Flask(__name__)
 
-@app.route('/api/stock-data', methods=['GET'])
+@app.route('/api/stock-data')
 def get_stock_data():
     # Define the ticker symbol
     ticker_symbol = 'AAPL'
