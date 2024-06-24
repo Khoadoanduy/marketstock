@@ -1,5 +1,11 @@
+import StockData from "./(components)/StockData";
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div>
+      <StockData/>
+    </div>
+    
+  )
 };
 
 export default Home;
