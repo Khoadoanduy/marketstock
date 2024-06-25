@@ -7,21 +7,32 @@ const StockContainer = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [symbols, setSymbols] = useState('AAPL,MSFT,GOOGL'); // Default symbols
+
+  const fetchData = async (tickers) => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:5000/api/stock-data?tickers=${tickers}`);
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:5000/api/stock-data');
-        setData(response.data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
+    fetchData(symbols);
+  }, [symbols]);
 
-    fetchData();
-  }, []);
+  const handleInputChange = (event) => {
+    setSymbols(event.target.value);
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    setLoading(true);
+    fetchData(symbols);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -37,49 +48,59 @@ const StockContainer = () => {
 
   return (
     <div className="stock-container">
-      <div className="stock-header">
-        <h1>{data.stock_info.longName} ({data.stock_info.symbol})</h1>
-        <p>{data.stock_info.currentPrice} USD</p>
-        <p className="change">{data.stock_info.priceChange} ({data.stock_info.priceChangePercent}%)</p>
-        <p>Closed: {new Date(data.stock_info.lastClose).toLocaleString()}</p>
-      </div>
-      <div className="stock-chart">
-        {/* You can add a chart component here if you have chart data */}
-      </div>
-      <div className="stock-details">
-        <div className="detail-item">
-          <p>Open</p>
-          <p>{data.historical_data.Open}</p>
+      {/* <form onSubmit={handleFormSubmit}>
+        <input
+          type="text"
+          value={symbols}
+          onChange={handleInputChange}
+          placeholder="Enter comma-separated stock symbols"
+        />
+        <button type="submit">Fetch Data</button>
+      </form> */}
+      {data.map((stock) => (
+        <div key={stock.ticker} className="stock-item">
+          <div className="stock-header">
+            <h1>{stock.stock_info.longName} ({stock.stock_info.symbol})</h1>
+            <p>{stock.stock_info.currentPrice} USD</p>
+            <p className="change">{stock.stock_info.priceChange} ({stock.stock_info.priceChangePercent}%)</p>
+            <p>Closed: {new Date(stock.stock_info.previousClose).toLocaleString()}</p>
+          </div>
+          <div className="stock-details">
+            <div className="detail-item">
+              <p>Open</p>
+              <p>{stock.historical_data[0].Open}</p>
+            </div>
+            <div className="detail-item">
+              <p>High</p>
+              <p>{stock.stock_info.dayHigh}</p>
+            </div>
+            <div className="detail-item">
+              <p>Low</p>
+              <p>{stock.stock_info.dayLow}</p>
+            </div>
+            <div className="detail-item">
+              <p>Mkt cap</p>
+              <p>{stock.stock_info.marketCap}</p>
+            </div>
+            <div className="detail-item">
+              <p>P/E ratio</p>
+              <p>{stock.stock_info.trailingPE}</p>
+            </div>
+            <div className="detail-item">
+              <p>Div yield</p>
+              <p>{stock.stock_info.dividendYield}</p>
+            </div>
+            <div className="detail-item">
+              <p>52-wk high</p>
+              <p>{stock.stock_info.fiftyTwoWeekHigh}</p>
+            </div>
+            <div className="detail-item">
+              <p>52-wk low</p>
+              <p>{stock.stock_info.fiftyTwoWeekLow}</p>
+            </div>
+          </div>
         </div>
-        <div className="detail-item">
-          <p>High</p>
-          <p>{data.stock_info.dayHigh}</p>
-        </div>
-        <div className="detail-item">
-          <p>Low</p>
-          <p>{data.stock_info.dayLow}</p>
-        </div>
-        <div className="detail-item">
-          <p>Mkt cap</p>
-          <p>{data.stock_info.marketCap}</p>
-        </div>
-        <div className="detail-item">
-          <p>P/E ratio</p>
-          <p>{data.stock_info.peRatio}</p>
-        </div>
-        <div className="detail-item">
-          <p>Div yield</p>
-          <p>{data.stock_info.dividendYield}</p>
-        </div>
-        <div className="detail-item">
-          <p>52-wk high</p>
-          <p>{data.stock_info.fiftyTwoWeekHigh}</p>
-        </div>
-        <div className="detail-item">
-          <p>52-wk low</p>
-          <p>{data.stock_info.fiftyTwoWeekLow}</p>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };
