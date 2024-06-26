@@ -63,7 +63,7 @@ const StockContainer = () => {
             <h1>{stock.stock_info.longName} ({stock.stock_info.symbol})</h1>
             <p>{stock.stock_info.currentPrice} USD</p>
             <p className="change">{stock.stock_info.priceChange} ({stock.stock_info.priceChangePercent}%)</p>
-            <p>Closed: {new Date(stock.stock_info.previousClose).toLocaleString()}</p>
+            <p>Closed: {new Date(stock.historical_data[0].Date).toLocaleString()}</p>
           </div>
           <div className="stock-details">
             <div className="detail-item">
