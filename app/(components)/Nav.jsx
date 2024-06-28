@@ -5,9 +5,7 @@ import { options } from "../api/auth/[...nextauth]/options";
 
 export async function Nav() {
   const session = await getServerSession(options);
-  console.log("tao");
-  console.log(session);
-  console.log("bi kep giua");
+  
   // return {
   //   props: {
   //     session,
@@ -30,8 +28,11 @@ export async function Nav() {
             <Link href="/signin">
               Login
             </Link>
+            
           )}
-          <p>{session?.user?.name}</p>
+          <Link href="/dashboard">
+            <p> {session?.user?.name} </p>
+          </Link>
         </div>
       </nav>
     </header>

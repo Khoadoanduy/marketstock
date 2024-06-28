@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '/app/styles/StockContainer.css'; // Make sure to create this CSS file
+import '/app/styles/StockContainer.css';
 
 const StockContainer = () => {
   const [data, setData] = useState(null);
@@ -63,7 +63,7 @@ const StockContainer = () => {
             <h1>{stock.stock_info.longName} ({stock.stock_info.symbol})</h1>
             <p>{stock.stock_info.currentPrice} USD</p>
             <p className="change">{stock.stock_info.priceChange} ({stock.stock_info.priceChangePercent}%)</p>
-            <p>Closed: {new Date(stock.historical_data[0].Date).toLocaleString()}</p>
+            <p>Closed: {new Date(stock.historical_data[stock.historical_data.length-1].Date).toLocaleString()}</p>
           </div>
           <div className="stock-details">
             <div className="detail-item">
