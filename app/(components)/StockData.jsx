@@ -58,45 +58,47 @@ const StockContainer = () => {
         <button type="submit">Fetch Data</button>
       </form> */}
       {data.map((stock) => (
-        <div key={stock.ticker} className="stock-item">
-          <div className="stock-header">
-            <h1>{stock.stock_info.longName} ({stock.stock_info.symbol})</h1>
-            <p>{stock.stock_info.currentPrice} USD</p>
-            <p className="change">{stock.stock_info.priceChange} ({stock.stock_info.priceChangePercent}%)</p>
-            <p>Closed: {new Date(stock.historical_data[stock.historical_data.length-1].Date).toLocaleString()}</p>
-          </div>
-          <div className="stock-details">
-            <div className="detail-item">
-              <p>Open</p>
-              <p>{stock.historical_data[0].Open}</p>
+        <div className="stock-info border">
+          <div key={stock.ticker} className="stock-item">
+            <div className="stock-header">
+              <h1>{stock.stock_info.longName} ({stock.stock_info.symbol})</h1>
+              <p>{stock.stock_info.currentPrice} USD</p>
+              <p className="change"> <span>{stock.stock_info.priceChange}{stock.stock_info.priceChangePercent}%</span></p>
+              <p>Closed: {new Date(stock.historical_data[stock.historical_data.length-1].Date).toLocaleString()}</p>
             </div>
-            <div className="detail-item">
-              <p>High</p>
-              <p>{stock.stock_info.dayHigh}</p>
-            </div>
-            <div className="detail-item">
-              <p>Low</p>
-              <p>{stock.stock_info.dayLow}</p>
-            </div>
-            <div className="detail-item">
-              <p>Mkt cap</p>
-              <p>{stock.stock_info.marketCap}</p>
-            </div>
-            <div className="detail-item">
-              <p>P/E ratio</p>
-              <p>{stock.stock_info.trailingPE}</p>
-            </div>
-            <div className="detail-item">
-              <p>Div yield</p>
-              <p>{stock.stock_info.dividendYield}</p>
-            </div>
-            <div className="detail-item">
-              <p>52-wk high</p>
-              <p>{stock.stock_info.fiftyTwoWeekHigh}</p>
-            </div>
-            <div className="detail-item">
-              <p>52-wk low</p>
-              <p>{stock.stock_info.fiftyTwoWeekLow}</p>
+            <div className="stock-details">
+              <div className="detail-item">
+                <p>Open</p>
+                <p>{stock.historical_data[stock.historical_data.length-1].Open}</p>
+              </div>
+              <div className="detail-item">
+                <p>High</p>
+                <p>{stock.stock_info.dayHigh}</p>
+              </div>
+              <div className="detail-item">
+                <p>Low</p>
+                <p>{stock.stock_info.dayLow}</p>
+              </div>
+              <div className="detail-item">
+                <p>Mkt cap</p>
+                <p>{stock.stock_info.marketCap}</p>
+              </div>
+              <div className="detail-item">
+                <p>P/E ratio</p>
+                <p>{stock.stock_info.trailingPE}</p>
+              </div>
+              <div className="detail-item">
+                <p>Div yield</p>
+                <p>{stock.stock_info.dividendYield}</p>
+              </div>
+              <div className="detail-item">
+                <p>52-wk high</p>
+                <p>{stock.stock_info.fiftyTwoWeekHigh}</p>
+              </div>
+              <div className="detail-item">
+                <p>52-wk low</p>
+                <p>{stock.stock_info.fiftyTwoWeekLow}</p>
+              </div>
             </div>
           </div>
         </div>
