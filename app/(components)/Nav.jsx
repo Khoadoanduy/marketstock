@@ -19,6 +19,7 @@ export async function Nav() {
         <div>My Site</div>
         <div className="flex gap-10">
           <Link href="/">Home</Link>
+          <Link href="/WatchList">Watch List</Link>
           {/* <Link href="/CreateUser">Create User</Link> */}
           {session ? (
             <Link href="/api/auth/signout?callbackUrl=/">

@@ -1,4 +1,3 @@
-// models/Watchlist.js
 const mongoose = require('mongoose');
 
 const watchlistSchema = new mongoose.Schema({
@@ -7,4 +6,4 @@ const watchlistSchema = new mongoose.Schema({
   lastNotifiedPrice: { type: Number }
 });
 
-module.exports = mongoose.model('Watchlist', watchlistSchema);
+module.exports = mongoose.models.Watchlist || mongoose.model('Watchlist', watchlistSchema);
