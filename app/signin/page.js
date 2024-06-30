@@ -24,6 +24,7 @@ const LoginPage = () => {
       router.refresh();
       router.push("/");
     }
+    window.location.reload();
   };
 
   return (
