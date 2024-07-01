@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import TickerCard from "../(components)/TickerCard";
+import WatchlistSidebar from "../(components)/WatchlistSidebar";
 
 export function WatchList() {
   const { data: session, status } = useSession();
@@ -37,11 +38,7 @@ export function WatchList() {
       <p> {session.user.email} </p>
       <div id="page" className="flex flex-col">
         <div id="watchlist-sidebar">
-          <span>{JSON.stringify(watchList)}</span>
-          <input className="ml-4" />
-          <button type="button" className="ml-4 border">
-            Update watchlist
-          </button>
+          <WatchlistSidebar watchlist={watchList} setWatchList={setWatchList} />
         </div>
         <div id="watchlist-main">
           {watchList.map((ticker) => (
