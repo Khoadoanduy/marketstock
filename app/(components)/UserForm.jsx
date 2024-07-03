@@ -7,6 +7,7 @@ const UserForm = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
+  const [customer,setCustomer] = useState("");
 
   const handleChange = (e) => {
     const value = e.target.value;
